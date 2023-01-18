@@ -1,0 +1,30 @@
+intrinsic class swfstudio.plugins.ADO
+{
+	public function refresh(params:Object,callback:Object,errorCallback:Object):Object;
+	public function moveNext(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setSeparator(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setTable(params:Object,callback:Object,errorCallback:Object):Object;
+	public function move(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setRowFormat(params:Object,callback:Object,errorCallback:Object):Object;
+	public function moveLast(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setDelimiter(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getRecordCount(params:Object,callback:Object,errorCallback:Object):Object;
+	public function close(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getRows(params:Object,callback:Object,errorCallback:Object):Object;
+	public function execSQL(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getFieldList(params:Object,callback:Object,errorCallback:Object):Object;
+	public function moveBy(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getVersion(params:Object,callback:Object,errorCallback:Object):Object;
+	public function movePrevious(params:Object,callback:Object,errorCallback:Object):Object;
+	public function open(params:Object,callback:Object,errorCallback:Object):Object;
+	public function find(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setWhere(params:Object,callback:Object,errorCallback:Object):Object;
+	public function moveFirst(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setSQL(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setFieldList(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setConnectString(params:Object,callback:Object,errorCallback:Object):Object;
+	public function moveTo(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setOrderBy(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getCurrentRow(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getProvider(params:Object,callback:Object,errorCallback:Object):Object;
+}

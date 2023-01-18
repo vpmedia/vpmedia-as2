@@ -1,0 +1,4 @@
+﻿/** * com.sekati.reflect.Stringifier * @version 1.0.0 * @author jason m horwitz | sekati.com * Copyright (C) 2007  jason m horwitz, Sekat LLC. All Rights Reserved. * Released under the MIT License: http://www.opensource.org/licenses/mit-license.php */ import com.sekati.core.KeyFactory; import com.sekati.reflect.Reflection;
+/** * Stringify class instances with reflective information. * @see com.sekati.core.CoreObject * @see com.sekati.core.CoreInterface */class com.sekati.reflect.Stringifier {
+	/**	 * Return the Class object instances fully qualified class name and runtime unique id.	 * @param o (Object) instance object to stringify.	 * @return String	 */	public static function stringify(o:Object):String {		return Reflection.getFullyQualifiedClassName( o ) + ':' + KeyFactory.getKey( o );			}
+	private function Stringifier() {	}}

@@ -1,0 +1,145 @@
+
+/*
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at 
+  http://www.mozilla.org/MPL/ 
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the License. 
+  
+  The Original Code is core2: ECMAScript core objects 2nd gig AS2. 
+  
+  The Initial Developer of the Original Code is
+  Zwetan Kjukov <zwetan@gmail.com>.
+  Portions created by the Initial Developer are Copyright (C) 2003-2006
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+*/
+
+//_global
+ASSetPropFlags( _global, "GetObjectPath", 1, 1 );
+ASSetPropFlags( _global, "GetTypeOf", 1, 1 );
+ASSetPropFlags( _global, "hasOwnProperty", 1, 1 );
+ASSetPropFlags( _global, "isGlobalReserved", 1, 1 );
+ASSetPropFlags( _global, "propertyIsEnumerable", 1, 1 );
+ASSetPropFlags( _global, "ToSource", 1, 1 );
+
+//Interfaces
+ASSetPropFlags( _global, "ICloneable", 1, 1 );
+ASSetPropFlags( _global, "IComparable", 1, 1 );
+ASSetPropFlags( _global, "IConvertible", 1, 1 );
+ASSetPropFlags( _global, "ICopyable", 1, 1 );
+ASSetPropFlags( _global, "IEquality", 1, 1 );
+ASSetPropFlags( _global, "IFormattable", 1, 1 );
+ASSetPropFlags( _global, "ISerializable", 1, 1 );
+
+//object
+ASSetPropFlags( Object.prototype, "clone", 1, 1 );
+ASSetPropFlags( Object.prototype, "copy", 1, 1 );
+ASSetPropFlags( Object.prototype, "equals", 1, 1 );
+ASSetPropFlags( Object.prototype, "getConstructorName", 1, 1 );
+ASSetPropFlags( Object.prototype, "getConstructorPath", 1, 1 );
+ASSetPropFlags( Object.prototype, "hasProperty", 1, 1 );
+ASSetPropFlags( Object.prototype, "memberwiseClone", 1, 1 );
+ASSetPropFlags( Object.prototype, "memberwiseCopy", 1, 1 );
+ASSetPropFlags( Object.prototype, "propertyIsEnumerable", 1, 1 );
+ASSetPropFlags( Object.prototype, "referenceEquals", 1, 1 );
+ASSetPropFlags( Object.prototype, "toBoolean", 1, 1 );
+ASSetPropFlags( Object.prototype, "toNumber", 1, 1 );
+ASSetPropFlags( Object.prototype, "toObject", 1, 1 );
+ASSetPropFlags( Object.prototype, "toSource", 1, 1 );
+
+//Array
+ASSetPropFlags( Array.prototype, "clone", 1, 1 );
+ASSetPropFlags( Array.prototype, "contains", 1, 1 );
+ASSetPropFlags( Array.prototype, "copy", 1, 1 );
+ASSetPropFlags( Array.prototype, "copyTo", 1, 1 );
+ASSetPropFlags( Array.prototype, "equals", 1, 1 );
+ASSetPropFlags( Array.prototype, "every", 1, 1 );
+ASSetPropFlags( Array.prototype, "filter", 1, 1 );
+ASSetPropFlags( Array.prototype, "forEach", 1, 1 );
+ASSetPropFlags( Array, "fromArguments", 1, 1 );
+ASSetPropFlags( Array.prototype, "indexOf", 1, 1 );
+ASSetPropFlags( Array, "initialize", 1, 1 );
+ASSetPropFlags( Array.prototype, "map", 1, 1 );
+ASSetPropFlags( Array.prototype, "some", 1, 1 );
+ASSetPropFlags( Array.prototype, "toSource", 1, 1 );
+
+//Boolean
+ASSetPropFlags( Boolean.prototype, "compareTo", 1, 1 );
+ASSetPropFlags( Boolean.prototype, "clone", 1, 1 );
+ASSetPropFlags( Boolean.prototype, "copy", 1, 1 );
+ASSetPropFlags( Boolean.prototype, "equals", 1, 1 );
+ASSetPropFlags( Boolean.prototype, "toBoolean", 1, 1 );
+ASSetPropFlags( Boolean.prototype, "toNumber", 1, 1 );
+ASSetPropFlags( Boolean.prototype, "toObject", 1, 1 );
+ASSetPropFlags( Boolean.prototype, "toSource", 1, 1 );
+
+//Date
+ASSetPropFlags( Date.prototype, "clone", 1, 1 );
+ASSetPropFlags( Date.prototype, "copy", 1, 1 );
+ASSetPropFlags( Date.prototype, "equals", 1, 1 );
+ASSetPropFlags( Date.prototype, "getUTCYear", 1, 1 );
+ASSetPropFlags( Date.prototype, "getYear", 1, 1 );
+ASSetPropFlags( Date.prototype, "toSource", 1, 1 );
+
+//Error
+ASSetPropFlags( Error.prototype, "equals", 1, 1 );
+ASSetPropFlags( Error.prototype, "getMessage", 1, 1 );
+ASSetPropFlags( Error.prototype, "toSource", 1, 1 );
+ASSetPropFlags( Error.prototype, "toString", 1, 1 );
+
+//Function
+ASSetPropFlags( _global.Function.prototype, "clone", 1, 1 );
+ASSetPropFlags( _global.Function.prototype, "copy", 1, 1 );
+ASSetPropFlags( _global.Function.prototype, "equals", 1, 1 );
+ASSetPropFlags( _global.Function.prototype, "toSource", 1, 1 );
+
+//NullObject
+ASSetPropFlags( _global, "NullObject", 1, 1 );
+ASSetPropFlags( NullObject.prototype, "toString", 1, 1 );
+ASSetPropFlags( NullObject.prototype, "valueOf", 1, 1 );
+
+//Number
+ASSetPropFlags( Number.prototype, "clone", 1, 1 );
+ASSetPropFlags( Number.prototype, "copy", 1, 1 );
+ASSetPropFlags( Number.prototype, "equals", 1, 1 );
+ASSetPropFlags( Number.prototype, "toBoolean", 1, 1 );
+ASSetPropFlags( Number.prototype, "toExponential", 1, 1 );
+ASSetPropFlags( Number.prototype, "toFixed", 1, 1 );
+ASSetPropFlags( Number.prototype, "toNumber", 1, 1 );
+ASSetPropFlags( Number.prototype, "toObject", 1, 1 );
+ASSetPropFlags( Number.prototype, "toPrecision", 1, 1 );
+ASSetPropFlags( Number.prototype, "toSource", 1, 1 );
+
+//String
+ASSetPropFlags( String.prototype, "clone", 1, 1 );
+ASSetPropFlags( String, "compare", 1, 1 );
+ASSetPropFlags( String.prototype, "compareTo", 1, 1 );
+ASSetPropFlags( String.prototype, "copy", 1, 1 );
+ASSetPropFlags( String.prototype, "equals", 1, 1 );
+ASSetPropFlags( String, "empty", 1, 1 );
+ASSetPropFlags( String.prototype, "endsWith", 1, 1 );
+ASSetPropFlags( String, "format", 1, 1 );
+ASSetPropFlags( String.prototype, "indexOfAny", 1, 1 );
+ASSetPropFlags( String.prototype, "insert", 1, 1 );
+ASSetPropFlags( String.prototype, "lastIndexOfAny", 1, 1 );
+ASSetPropFlags( String.prototype, "_padHelper", 1, 1 );
+ASSetPropFlags( String.prototype, "padLeft", 1, 1 );
+ASSetPropFlags( String.prototype, "padRight", 1, 1 );
+ASSetPropFlags( String.prototype, "replace", 1, 1 );
+ASSetPropFlags( String.prototype, "startsWith", 1, 1 );
+ASSetPropFlags( String.prototype, "toBoolean", 1, 1 );
+ASSetPropFlags( String.prototype, "toCharArray", 1, 1 );
+ASSetPropFlags( String.prototype, "toNumber", 1, 1 );
+ASSetPropFlags( String.prototype, "toObject", 1, 1 );
+ASSetPropFlags( String.prototype, "toSource", 1, 1 );
+ASSetPropFlags( String.prototype, "_trimHelper", 1, 1 );
+ASSetPropFlags( String.prototype, "trim", 1, 1 );
+ASSetPropFlags( String.prototype, "trimEnd", 1, 1 );
+ASSetPropFlags( String.prototype, "trimStart", 1, 1 );
+ASSetPropFlags( String, "whiteSpaceChars", 1, 1 );
+

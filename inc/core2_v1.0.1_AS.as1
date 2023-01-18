@@ -1,0 +1,1584 @@
+/* build info:
+   core2 : ECMAScript core objects 2nd gig v1.0.1 for Flash ActionScript v1.0
+   Mon Jan 09 2006 13:35:10 GMT+0100
+*/
+/*
+The contents of this file are subject to the Mozilla Public License Version
+1.1 (the "License"); you may not use this file except in compliance with
+the License. You may obtain a copy of the License at 
+http://www.mozilla.org/MPL/ 
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+for the specific language governing rights and limitations under the License. 
+The Original Code is core2: ECMAScript core objects 2nd gig. 
+The Initial Developer of the Original Code is
+Zwetan Kjukov <zwetan@gmail.com>.
+Portions created by the Initial Developer are Copyright (C) 2003-2006
+the Initial Developer. All Rights Reserved.
+Contributor(s):
+*/
+_global.$CORE2_FIXGETYEAR = false;
+_global.$CORE2_ERROR_CTOR = true;
+_global.$CORE2_FCTNSTRING = false;
+_global.$GLOBAL_RESERVED = [ "_global" ];
+Object.prototype.propertyIsEnumerable = Object.prototype.isPropertyEnumerable;
+Array.prototype.clone = function()
+{
+return this.concat();
+}
+Array.prototype.contains = function( value )
+{
+return( this.indexOf( value ) > -1 );
+}
+Array.prototype.copy = function()
+{
+var arr, i;
+arr = [];
+for( i=0; i<this.length; i++ )
+{
+if( this[i] === undefined )
+{
+arr[i] = undefined;
+continue;
+}
+if( this[i] === null )
+{
+arr[i] = null;
+continue;
+}
+arr[i] = this[i].copy();
+}
+return arr;
+}
+Array.prototype.copyTo = function(  destination,  index )
+{
+var i;
+if( destination == null )
+{
+return; 
+}
+if( index == null )
+{
+index = 0;
+}
+for( i=0; i<this.length; i++, index++ )
+{
+if( this[i] === undefined )
+{
+destination[index] = undefined;
+continue;
+}
+if( this[i] === null )
+{
+destination[index] = null;
+continue;
+}
+destination[index] = this[i].copy();
+}
+}
+Array.prototype.equals = function( arrObj )
+{
+var i;
+if( (arrObj == null) || (GetTypeOf( arrObj ) != "array") )
+{
+return false;
+}
+if( this == arrObj )
+{
+return true;
+}
+if( this.length != arrObj.length )
+{
+return false;
+}
+for( i=0; i<this.length; i++ )
+{
+if( this[i] == null )
+{
+if( this[i] != arrObj[i] )
+{
+return false;
+}
+continue;
+}
+if( !this[i].equals( arrObj[i] ) )
+{
+return false;
+}
+}
+return true;
+}
+if( !Array.prototype.every )
+{
+Array.prototype.every = function(  callback, thisObject )
+{
+var len, i;
+len = this.length;
+if( thisObject == null )
+{
+thisObject = _global;
+}
+for( i=0; i<len; i++ )
+{
+if( !callback.call( thisObject, this[i], i, this ) )
+{
+return false;
+}
+}
+return true;
+}
+}
+if( !Array.prototype.filter )
+{
+Array.prototype.filter = function(  callback, thisObject )
+{
+var arr, i;
+arr = [];
+if( thisObject == null )
+{
+thisObject = _global;
+}
+for( i=0; i<this.length; i++ )
+{
+if( callback.call( thisObject, this[i], i, this ) )
+{
+if( this[i] === undefined )
+{
+arr.push( undefined );
+continue;
+}
+if( this[i] === null )
+{
+arr.push( null );
+continue;
+}
+arr.push( this[i].copy() );
+}
+}
+return arr;
+}
+}
+if( !Array.prototype.forEach )
+{
+Array.prototype.forEach = function(  callback, thisObject )
+{
+var len, i;
+len = this.length;
+if( thisObject == null )
+{
+thisObject = _global;
+}
+for( i=0; i<len; i++ )
+{
+callback.call( thisObject, this[i], i, this );
+}
+}
+}
+Array.fromArguments = function( args )
+{
+var arr, i;
+arr = [];
+for( i=0; i<args.length; i++ )
+{
+arr.push( args[i] );
+}
+return arr;
+}
+Array.prototype.indexOf = function( value,  startIndex,  count )
+{
+var i;
+if( startIndex == null )
+{
+startIndex = 0;
+}
+if( count == null  )
+{
+count = this.length - startIndex;
+}
+if( (startIndex < 0) || (startIndex > this.length) )
+{
+return; 
+}
+if( (count < 0) || (count > (this.length - startIndex)) )
+{
+return; 
+}
+if( value == null )
+{
+value = new NullObject();
+}
+for( i=0 ; startIndex<this.length; startIndex++, i++ )
+{
+if( value.equals( this[startIndex] ) )
+{
+return startIndex;
+}
+if( i == count )
+{
+break;
+}
+}
+return -1;
+}
+Array.initialize = function(  index, value )
+{
+if( index == null )
+{
+index = 0;
+}
+if( value === undefined )
+{
+value = null;
+}
+var arr, i;
+arr = [];
+for( i=0; i<index; i++ )
+{
+arr.push( value );
+}
+return arr;
+}
+if( !Array.prototype.map )
+{
+Array.prototype.map = function(  callback, thisObject )
+{
+var arr, i;
+arr = [];
+if( thisObject == null )
+{
+thisObject = _global;
+}
+for( i=0; i<this.length; i++ )
+{
+arr.push( callback.call( thisObject, this[i], i, this ) );
+}
+return arr;
+}
+}
+if( !Array.prototype.some )
+{
+Array.prototype.some = function(  callback, thisObject )
+{
+var len, i;
+len = this.length;
+if( thisObject == null )
+{
+thisObject = _global;
+}
+for( i=0; i<len; i++ )
+{
+if( callback.call( thisObject, this[i], i, this ) )
+{
+return true;
+}
+}
+return false;
+}
+}
+Array.prototype.toSource = function(  indent,  indentor )
+{
+var i, source;
+source = [];
+if( indent != null )
+{
+indent++;
+}
+for( i=0; i<this.length; i++ )
+{
+if( this[i] === undefined )
+{
+source.push( "undefined" );
+continue;
+}
+if( this[i] === null )
+{
+source.push( "null" );
+continue;
+}
+source.push( this[i].toSource( indent, indentor ) );
+}
+if( indent == null )
+{
+return( "[" + source.join( "," ) + "]" );
+}
+if( indentor == null )
+{
+indentor = "    ";
+}
+if(indent == null )
+{
+indent = 0;
+}
+var decal = "\n" + Array.initialize( indent, indentor ).join( "" );
+return( decal + "[" + decal + source.join( "," + decal ) + decal + "]" );
+}
+Boolean.prototype.compareTo = function( obj )
+{
+if( obj == null )
+{
+return 1;
+}
+if( GetTypeOf( obj ) != "boolean" )
+{
+return; 
+}
+if( this.equals( obj )  )
+{
+return 0;
+}
+else if( this.equals( false ) )
+{
+return -1;
+}
+return 1;
+}
+Boolean.prototype.clone = function()
+{
+return this;
+}
+Boolean.prototype.copy = function()
+{
+return this.valueOf();
+}
+Boolean.prototype.equals = function( boolObj )
+{
+if( (boolObj == null) || (GetTypeOf( boolObj ) != "boolean") )
+{
+return false;
+}
+return( this.valueOf() == boolObj.valueOf() );
+}
+Boolean.prototype.toBoolean = function()
+{
+return this.valueOf(); 
+}
+Boolean.prototype.toNumber = function()
+{
+if( this.valueOf() == true )
+{
+return 1;
+}
+return 0;
+}
+Boolean.prototype.toObject = function()
+{
+return new Boolean( this.valueOf() );
+}
+Boolean.prototype.toSource = function()
+{
+if( this.equals( true ) )
+{
+return "true";
+}
+return "false";
+}
+Date.prototype.clone = function()
+{
+return this;
+}
+Date.prototype.copy = function()
+{
+return new Date( this.valueOf() );
+}
+Date.prototype.equals = function( datObj )
+{
+if( (datObj == null) || (GetTypeOf( datObj ) != "date") )
+{
+return false;
+}
+return( this.toString() == datObj.toString() );
+}
+if( $CORE2_FIXGETYEAR )
+{
+Date.prototype.getYear = Date.prototype.getFullYear;
+}
+Date.prototype.toSource = function()
+{
+var dat, i, y, m, d, h, mn, s, ms;
+y   = this.getFullYear();
+m   = this.getMonth();
+d   = this.getDate();
+h   = this.getHours();
+mn  = this.getMinutes();
+s   = this.getSeconds();
+ms  = this.getMilliseconds();
+dat = [ y, m, d, h, mn, s, ms ];
+dat.reverse();
+i=0;
+while( dat[i] == 0 )
+{
+dat.splice( 0, 1 );
+}
+dat.reverse();
+return "new Date(" + dat.join( "," ) + ")";
+}
+if( $CORE2_ERROR_CTOR )
+{
+_global.Error = function(  message )
+{
+if( message == null )
+{
+message = "";
+}
+this.name    = "Error";
+this.message = String( message );
+}
+}
+Error.prototype.message = "";
+Error.prototype.equals = function( errObj )
+{
+if( (errObj == null) || (GetTypeOf( errObj ) != "error") )
+{
+return false;
+}
+return( this.toString() == errObj.toString() );
+}
+Error.prototype.getMessage = function()
+{
+if( this.message == undefined )
+{
+return "";
+}
+return this.message;
+}
+Error.prototype.toSource = function()
+{
+return "new Error(\""+this.message+"\")";
+}
+Error.prototype.toString = function()
+{
+var separator, message;
+separator = " : ";
+message   = this.getMessage();
+if( message != "" )
+{
+message = separator + message;
+}
+return "## " + this.name + message + " ##";
+}
+_global.Function.prototype.clone = function()
+{
+return this;
+}
+_global.Function.prototype.copy = function()
+{
+return this.valueOf();
+}
+_global.Function.prototype.equals = function( fctObj )
+{
+if( (fctObj == null) || (GetTypeOf( fctObj ) != "function") )
+{
+return false;
+}
+if( this.valueOf() == fctObj.valueOf() )
+{
+return true;
+}
+if( $CORE2_FCTNSTRING )
+{
+if( this.toString() == fctObj.toString() )
+{
+return true;
+}
+}
+return false;
+}
+_global.Function.prototype.toSource = function()
+{
+return "(function)";
+}
+_global.NullObject = function()
+	{
+	}
+NullObject.prototype.toString = function()
+	{
+	return "null";
+	}
+NullObject.prototype.valueOf = function()
+	{
+	return null;
+	}
+Number.prototype.clone = function()
+{
+return this;
+}
+Number.prototype.copy = function()
+{
+return this.valueOf();
+}
+Number.prototype.equals = function( numObj )
+{
+if( (numObj == null) || (GetTypeOf( numObj ) != "number") )
+{
+return false;
+}
+if( this.valueOf() == numObj.valueOf() )
+{
+return true;
+}
+return false;
+}
+Number.prototype.toBoolean = function()
+{
+if( isNaN( this ) || (this.valueOf() == 0) )
+{
+return false;
+}
+return true;
+}
+if( !Number.prototype.toExponential )
+{
+Number.prototype.toExponential = function(  fractionDigits )
+{
+var x, s, str, l, lm, n;
+x = this;
+s = "+";
+if( isNaN( x ) )
+{
+return "NaN";
+}
+if( x < 0 )
+{
+s = "-";
+x = -x;
+}
+if( x == Infinity )
+{
+return s + "Infinity";
+}
+l  = Math.floor( Math.log( x ) / Math.LN10 );
+lm = Math.pow( 10, l );
+n  = x / lm;
+if( fractionDigits == null )
+{
+str = n.toString();
+}
+else
+{
+if( fractionDigits < 0 )
+{
+fractionDigits = 0;
+}
+else if( fractionDigits > 20 )
+{
+fractionDigits = 20;
+}
+str = n.toFixed( fractionDigits );
+}
+str += "e" + s + l;
+return str;
+}
+}
+if( !Number.prototype.toFixed )
+{
+Number.prototype.toFixed = function(  fractionDigits )
+{
+var x, m, r, str, d, i;
+x = this;
+if( isNaN( x ) )
+{
+return "NaN";
+}
+if( (fractionDigits == null) || (fractionDigits < 0) )
+{
+fractionDigits = 0;
+}
+else if( fractionDigits > 20 )
+{
+fractionDigits = 20;
+}
+m   = Math.pow( 10, fractionDigits );
+r   = Math.round( x*m ) / m;
+str = r.toString();
+d   = str.split( "." )[1];
+if( d && (d.length < fractionDigits) )
+{
+for( i=0; i<(fractionDigits-d.length); i++ )
+{
+str += "0";
+}
+}
+return str;
+}
+}
+Number.prototype.toNumber = function()
+{
+return this.valueOf(); 
+}
+Number.prototype.toObject = function()
+{
+return new Number( this.valueOf() );
+}
+if( !Number.prototype.toPrecision )
+{
+Number.prototype.toPrecision = function(  precision )
+{
+var x, l, m, r, str, d, i;
+x   = this;
+str = x.toString();
+if( isNaN( x ) )
+{
+return "NaN";
+}
+if( (precision == null) || (x == Infinity) || (x == -Infinity) )
+{
+return this.toString();
+}
+if( precision < 1 )
+{
+precision = 1;
+}
+else if( precision > 21 )
+{
+precision = 21;
+}
+if( str.length > precision )
+{
+return x.toExponential( precision - 1 );
+}
+l   = Math.floor( Math.log(x) / Math.LN10 );
+m   = Math.pow( 10, l + 1 - precision );
+r   = Math.round( x/m ) * m;
+str = r.toString();
+d   = str.split( "." ).join( "" );
+if( d && (d.length < precision) )
+{
+if( str.indexOf( "." ) == -1 )
+{
+str += ".";
+}
+for( i=0; i<(precision-d.length); i++ )
+{
+str += "0";
+}
+}
+return str;
+}
+}
+Number.prototype.toSource = function()
+{
+return this.toString();
+}
+Object.prototype.clone = function()
+{
+return this;
+}
+Object.prototype.copy = function()
+{
+var obj, member;
+obj = {};
+for( member in this )
+{
+if( !this.hasOwnProperty( member ) )
+{
+continue;
+}
+if( this[member] === undefined )
+{
+obj[member] = undefined;
+continue;
+}
+if( this[member] === null )
+{
+obj[member] = null;
+continue;
+}
+obj[member] = this[member].copy();
+}
+return obj;
+}
+Object.prototype.equals = function( obj )
+{
+var member;
+if( GetTypeOf( obj ) == "function" )
+{
+return obj.equals( this );
+}
+	if( (this.valueOf() == null) && (obj == null) )
+		{
+		return true;
+		}
+if( (obj == null) || (GetTypeOf( obj ) != "object") )
+{
+return false;
+}
+if( this == obj )
+{
+return true;
+}
+for( member in this )
+{
+if( member.startsWith( "__" ) )
+{
+continue;
+}
+if( !this[member].equals( obj[member] ) )
+{
+return false;
+}
+}
+return true;
+}
+Object.prototype.getConstructorPath = function()
+{
+switch( this.constructor )
+{
+case Array:    return "Array";
+case Boolean:  return "Boolean";
+case Date:     return "Date";
+case Error:    return "Error";
+case Function: return "Function";
+case Number:   return "Number";
+case String:   return "String";
+case Object:   return "Object";
+}
+var path = GetObjectPath( this.constructor );
+if( path == undefined )
+{
+path = "Object"; 
+}
+return path;
+}
+Object.prototype.getConstructorName = function()
+{
+var path = this.getConstructorPath();
+if( path.indexOf( "." ) > -1 )
+{
+path = path.split( "." );
+return path.pop();
+}
+return path;
+}
+Object.prototype.hasProperty = function(  name )
+{
+return( this[name] != undefined );
+}
+if( !Object.prototype.isPrototypeOf )
+{
+Object.prototype.isPrototypeOf = function(  value )
+{
+var self = this.constructor;
+if( typeof value != "object" )
+{
+return false;
+}
+if( value instanceof self )
+{
+return true;
+}
+else
+{
+return false;
+}
+}
+}
+Object.prototype.memberwiseClone = function()
+{
+var obj, member;
+obj = {};
+for( member in this )
+{
+obj[member] = this[member];
+}
+return obj;
+}
+Object.prototype.memberwiseCopy = Object.prototype.copy;
+if( !Object.prototype.propertyIsEnumerable )
+{
+Object.prototype.propertyIsEnumerable = function(  name )
+{
+for( var member in this )
+{
+if( this.hasOwnProperty( name ) && (member == name) )
+{
+return true;
+}
+}
+return false;
+}
+}
+Object.prototype.referenceEquals = function( obj )
+{
+	if( (this.valueOf() === null) && (obj === null) )
+		{
+		return true;
+		}
+if( this === obj )
+{
+return true;
+}
+if( (obj == null) || (GetTypeOf( obj ) != "object") )
+{
+return false;
+}
+	if( this !== obj )
+		{
+return false;
+		}
+	return true;
+}
+Object.prototype.toBoolean = function()
+{
+return new Boolean( this.valueOf() ).valueOf(); 
+}
+Object.prototype.toNumber = function()
+{
+return new Number( this.valueOf() ).valueOf();
+}
+Object.prototype.toObject = function()
+{
+return new Object( this.valueOf() );
+}
+Object.prototype.toSource = function(  indent,  indentor )
+{
+var member, source;
+source = [];
+if( indent != null )
+{
+indent++;
+}
+for( member in this )
+{
+if( this.hasOwnProperty( member ) )
+{
+if( this[member] === undefined )
+{
+source.push( member + ":" + "undefined" );
+continue;
+}
+if( this[member] === null )
+{
+source.push( member + ":" + "null" );
+continue;
+}
+source.push( member + ":" + this[member].toSource( indent, indentor ) );
+}
+}
+if( indent == null )
+{
+return( "{" + source.join( "," ) + "}" );
+}
+if( indentor == null )
+{
+indentor = "    ";
+}
+if(indent == null )
+{
+indent = 0;
+}
+var decal = "\n" + Array.initialize( indent, indentor ).join( "" );
+return( decal + "{" + decal + source.join( "," + decal ) + decal + "}" );
+}
+String.prototype.clone = function()
+{
+return this;
+}
+String.compare = function(  strA,  strB,  ignoreCase )
+{
+if( (strA == null) || (strB == null) )
+{
+if( strA == strB )
+{
+return 0; 
+}
+else if( strA == null )
+{
+return -1; 
+}
+else
+{
+return 1; 
+}
+}
+if( (GetTypeOf( strA ) != "string") || (GetTypeOf( strB ) != "string") )
+{
+return; 
+}
+strA = strA.toString();
+strB = strB.toString();
+if( ignoreCase == true )
+{
+strA = strA.toLowerCase();
+strB = strB.toLowerCase();
+}
+if( strA == strB )
+{
+return 0;
+}
+else if( strA.length > strB.length )
+{
+return 1;
+}
+else
+{
+return -1;
+}
+}
+String.prototype.compareTo = function( value )
+{
+if( value == null )
+{
+return 1;
+}
+if( GetTypeOf( value ) != "string" )
+{
+return; 
+}
+return String.compare( this.valueOf(), value.valueOf() );
+}
+String.prototype.copy = function()
+{
+return this.valueOf();
+}
+String.prototype.equals = function( strObj )
+{
+if( (strObj == null) || (GetTypeOf( strObj ) != "string") )
+{
+return false;
+}
+if( this.toString() == strObj.toString() )
+{
+return true;
+}
+return false;
+}
+String.empty = "";
+String.prototype.endsWith = function(  value )
+{
+if( value == null )
+{
+return false;
+}
+if( this.length < value.length )
+{
+return false;
+}
+return String.compare( this.substr( this.length-value.length ), value) == 0;
+}
+String.format = function(  format,  argN )
+{
+if( format == null )
+{
+return; 
+}
+var formated, args, str, ch, pos;
+formated = "";
+args     = Array.fromArguments( arguments );
+args.shift();
+if( format.indexOf( "{" ) == -1 )
+{
+return format;
+}
+str = ch = "";
+pos = 0;
+var next = function()
+{
+ch = format.charAt( pos );
+pos++;
+return ch;
+}
+var getIndexValue = function(  index )
+{
+switch( args[ index ] )
+{
+case undefined:
+return "";
+case null:
+return "null";
+default:
+return args[ index ].toString();
+}
+}
+var expression, run, index, expValue, paddingChar, spaceAlign;
+while( pos < format.length )
+{
+next();
+if( ch == "{" )
+{
+expression = next();
+run        = true;
+while( run )
+{
+next();
+if( ch != "}" )
+{
+expression += ch;
+}
+else
+{
+run = false;
+}
+}
+index       = null;
+paddingChar = " "; 
+expValue    = "";
+if( expression.indexOfAny( [ ",", ":" ] ) == -1 )
+{
+index    = parseInt( expression );
+expValue = getIndexValue( index );
+str     += expValue;
+}
+else
+{
+var vPos = expression.indexOf( "," );
+var fPos = expression.indexOf( ":" );
+if( vPos == -1 )
+{
+vPos = fPos;
+fPos = -1;
+}
+index    = parseInt( expression.substring( 0, vPos ) );
+expValue = getIndexValue( index );
+if( fPos == -1 )
+{
+spaceAlign = parseInt( expression.substr( vPos+1 ) );
+}
+else
+{
+spaceAlign  = parseInt( expression.substring( vPos+1, fPos ) );
+paddingChar = expression.substr( fPos+1 );
+}
+if( isNaN( spaceAlign ) )
+{
+}
+else if( spaceAlign > 0 )
+{
+expValue = expValue.padLeft( spaceAlign, paddingChar );
+}
+else
+{
+expValue = expValue.padRight( -spaceAlign, paddingChar );
+}
+str += expValue;
+}
+}
+else
+{
+str += ch;
+}
+}
+return str;
+}
+String.prototype.indexOfAny = function(  anyOf,  startIndex,  count )
+{
+var i, endIndex;
+if( anyOf == null )
+{
+return; 
+}
+if( this.length == 0 )
+{
+return -1;
+}
+if( (startIndex == null) || (startIndex < 0) )
+{
+startIndex = 0;
+}
+if( (count == null) || (count < 0) || (count > anyOf.length - startIndex) )
+{
+endIndex =  anyOf.length - 1;
+}
+else
+{
+endIndex = startIndex + count - 1;
+}
+for( i=startIndex; i<=endIndex ; i++ )
+{
+if( this.indexOf( anyOf[i] ) > -1 )
+{
+return i;
+}
+}
+return -1;
+}
+String.prototype.insert = function(  startIndex,  value )
+{    
+var str, strA, strB;
+str = this.copy();
+if( value == null )
+{
+return str;
+}
+if( str == "" )
+{
+return value;
+}
+if( startIndex == 0 )
+{
+return value + str;
+}
+else if( (startIndex == null) || (startIndex == str.length) )
+{
+return str + value;
+}
+strA = str.substr( 0, startIndex );
+strb = str.substr( startIndex );
+return strA + value + strB;
+}
+String.prototype.lastIndexOfAny = function(  anyOf,  startIndex,  count )
+{
+var i, endIndex;
+if( anyOf == null )
+{
+return; 
+}
+if( this.length == 0 )
+{
+return -1;
+}
+if( (startIndex == null) || (startIndex < 0) || (startIndex > anyOf.length) )
+{
+startIndex = anyOf.length - 1; 
+}
+if( (count == null) || (count < 0) || (count > startIndex+1) )
+{
+endIndex = 0; 
+}
+else
+{
+endIndex = startIndex - count + 1;
+}
+for( i=startIndex; i>= endIndex; i-- )
+{
+if( this.lastIndexOf( anyOf[i] ) > -1 )
+{
+return i;
+}
+}
+return -1;
+}
+String.prototype._padHelper = function(  totalWidth,  paddingChar,  isRightPadded )
+{
+var str, SPC;
+str = this.copy();
+SPC = " ";
+if( (totalWidth < str.length) || (totalWidth < 0) )
+{
+return str;
+}
+if( paddingChar == null )
+{
+paddingChar = SPC;
+}
+if( paddingChar.length > 1 )
+{
+paddingChar = paddingChar.charAt( 0 );
+}
+while( str.length != totalWidth )
+{
+if( isRightPadded == true )
+{
+str += paddingChar;
+}
+else
+{
+str = paddingChar + str;
+}
+}
+return str;
+}
+String.prototype.padLeft = function(  totalWidth,  paddingChar )
+{
+return this._padHelper( totalWidth, paddingChar, false);
+}
+String.prototype.padRight = function(  totalWidth,  paddingChar )
+{
+return this._padHelper( totalWidth, paddingChar, true);
+}
+if( !String.prototype.replace )
+{
+String.prototype.replace = function(  oldValue ,  newValue )
+{
+if( (oldValue == null) || (oldValue.length == 0) )
+{
+return this.toString();
+}
+if( newValue == null )
+{
+newValue = "";
+}
+if( this.indexOf( oldValue ) > -1 )
+{
+return this.split( oldValue ).join( newValue );
+}
+return this;
+}
+}
+String.prototype.startsWith = function(  value )
+{
+if( value == null )
+{
+return false;
+}
+if( this.length < value.length )
+{
+return false;
+}
+if( this.charAt( 0 ) != value.charAt( 0 ) )
+{
+return false;
+}
+return( String.compare( this.substr( 0, value.length), value) == 0);
+}
+String.prototype.toBoolean = function()
+{
+if( this.length == 0 )
+{
+return false;
+}
+return true;
+}
+String.prototype.toCharArray = function(  startIndex,  count )
+{
+var arr;
+arr = [];
+if( this == "" )
+{
+return arr;
+}
+if( (startIndex < 0) || (startIndex == null) ||
+(startIndex > this.length) || (startIndex > this.length - count) )
+{
+startIndex = 0;
+}
+if( (count <= 0) || (count == null) )
+{
+startIndex = 0;
+count      = this.length;
+}
+arr = this.split( "" );
+if( (startIndex != 0) || (count != this.length) )
+{
+arr = arr.splice( startIndex, count )
+}
+return arr;
+}
+String.prototype.toNumber = function()
+{
+return Number( this.trim() );
+}
+String.prototype.toObject = function()
+{
+return new String( this.valueOf() );
+}
+String.prototype.toSource = function()
+{
+var quote, str, pos, ch, code;
+quote = "\"";
+str   = "";
+pos   = 0;
+var toUnicode = function(  num )
+{
+var hex = num.toString( 16 );
+while( hex.length < 4 )
+{
+hex = "0"+hex;
+}
+return hex;
+}
+while( pos < this.length )
+{
+ch   = this.charAt( pos );
+code = this.charCodeAt( pos );
+if( code > 0xFF )
+{
+str += "\\u" + toUnicode( code );
+pos++;
+continue;
+}
+switch( ch )
+{
+case "\u0008": 
+str += "\\b";
+break;
+case "\u0009": 
+str += "\\t";
+break;
+case "\u000A": 
+str += "\\n";
+break;
+case "\u000B": 
+str += "\\v";
+break;
+case "\u000C": 
+str += "\\f";
+break;
+case "\u000D": 
+str += "\\r";
+break;
+case "\u0022": 
+str += "\\\"";
+break;
+case "\u0027": 
+str += "\\\'";
+break;
+case "\u005c": 
+str += "\\\\";
+break;
+default:
+str += ch;
+}
+pos++;
+}
+return( quote + str + quote );
+}
+String.prototype._trimHelper = function(  trimChars,  trimStart,  trimEnd )
+{
+if( trimStart == null )
+{
+trimStart = false;
+}
+if( trimEnd == null )
+{
+trimEnd = false;
+}
+var str, iLeft, iRight;
+str = this.copy();
+if( trimStart )
+{
+for( iLeft=0; (iLeft<str.length) && (trimChars.contains( str.charAt( iLeft ) )); iLeft++ )
+{
+}
+str = str.substr( iLeft );
+}
+if( trimEnd )
+{
+for( iRight=str.length-1; (iRight>=0) && (trimChars.contains( str.charAt( iRight ) )); iRight-- )
+{            
+}
+str = str.substring( 0, iRight+1 );
+}
+return str;
+}
+String.prototype.trim = function(  trimChars )
+{
+if( (trimChars == null) || (trimChars.length == 0) )
+{
+trimChars = String.whiteSpaceChars;
+}
+return this._trimHelper( trimChars, true, true );
+}
+String.prototype.trimEnd = function(  trimChars )
+{
+if( (trimChars == null) || (trimChars.length == 0) )
+{
+trimChars = String.whiteSpaceChars;
+}
+return this._trimHelper( trimChars, null, true );
+}
+String.prototype.trimStart = function(  trimChars )
+{
+if( (trimChars == null) || (trimChars.length == 0) )
+{
+trimChars = String.whiteSpaceChars;
+}
+return this._trimHelper( trimChars, true );
+}
+String.whiteSpaceChars = [ "\u0009", "\u000A", "\u000B", "\u000C", "\u000D",
+"\u0020", "\u00A0", "\u2000", "\u2001", "\u2002",
+"\u2003", "\u2004", "\u2005", "\u2006", "\u2007",
+"\u2008", "\u2009", "\u200A", "\u200B", "\u3000",
+"\uFEFF" ];
+_global.GetObjectPath = function(  target, scope )
+{
+var maxRecursion, commands, values, refs, name, ref, scopePath, isCoreObject, m, mm;
+maxRecursion = 200; 
+commands     = [];
+values       = [];
+refs         = [];
+scopePath    = "";
+if( target == null )
+{
+return undefined;
+}
+var getCoreObjectPath = function( obj )
+{
+switch( obj )
+{
+case Array:    return "Array";
+case Boolean:  return "Boolean";
+case Date:     return "Date";
+case Error:    return "Error";
+case Function: return "Function";
+case Number:   return "Number";
+case String:   return "String";
+case Object:   return "Object";
+}
+return undefined;
+}
+isCoreObject = getCoreObjectPath( target );
+if( isCoreObject != undefined )
+{
+return isCoreObject;
+}
+if( scope == null )
+{
+scope = _global; 
+}
+else
+{
+scopePath = getCoreObjectPath( scope );
+if( scopePath == undefined )
+{
+scopePath = GetObjectPath( scope );
+}
+}
+if( target.__path__ )
+{
+return target.__path__;
+}
+var list = function()
+{
+name = values.pop();
+ref  = refs.pop();
+if (ref == null)
+{
+values.push( "" );
+}
+else
+{
+for( m in ref )
+{
+if( m == "prototype" )
+{
+continue;
+}
+if( (ref[m] != null) && (ref[m].constructor == Array) )
+{
+continue;
+}
+if( ((typeof(ref[m]) == "object") || (typeof(ref[m]) == "function")) &&
+(ref.hasOwnProperty( m )) )
+{
+commands.push( list );
+values.push( name + "." + m );
+refs.push( ref[m] );
+}
+}
+}
+}
+for( mm in scope )
+{
+if( isGlobalReserved( mm ) )
+{
+continue;
+}
+commands.push( list );
+values.push( mm );
+refs.push( scope[mm] );
+}
+if( scope == _global )
+{
+var i, coreObjects, coreObject;
+coreObjects = ["Array","Boolean","Date","Error","Function","Number","String","Object"]
+for( i=0; i<coreObjects.length; i++ )
+{
+coreObject = coreObjects[i];
+commands.push( list );
+values.push( coreObject );
+refs.push( scope[coreObject] );
+}
+}
+while( (commands.length != 0) && (commands.length < maxRecursion ) )
+{
+commands.pop()();
+if( ref === target ) 
+{
+if( scope == _global )
+{
+target.__path__ = name;
+}
+else
+{
+scopePath += ".";
+}
+return scopePath+name;
+}
+}
+return undefined;
+}
+_global.GetTypeOf = function( obj )
+{
+if( obj === undefined )
+{
+return "undefined";
+}
+if( obj === null )
+{
+return "null";
+}
+switch( obj.constructor )
+{
+case Array:    return "array";
+case Boolean:  return "boolean";
+case Date:     return "date";
+case Error:    return "error";
+case Function: return "function";
+case Number:   return "number";
+case String:   return "string";
+case Object:   return "object";
+default:       return( typeof obj );
+}
+}
+_global.hasOwnProperty = Object.prototype.hasOwnProperty;
+_global.isGlobalReserved = function(  name )
+{
+for( var i=0; i < $GLOBAL_RESERVED.length; i++ )
+{
+if( $GLOBAL_RESERVED[i] == name )
+{
+return true;
+}
+}
+return false;
+}
+_global.propertyIsEnumerable = Object.prototype.propertyIsEnumerable;
+_global.ToSource = function(  indent,  indentor )
+{
+var target, member, source;
+source = [];
+if( indent != null )
+{
+indent++;
+}
+for( member in _global )
+{
+if( isGlobalReserved( member ) )
+{
+continue;
+}
+if( member == "__path__" )
+{
+continue;
+}
+if( _global.hasOwnProperty( member ) )
+{
+if( _global[member] === undefined )
+{
+source.push( member + ":" + "undefined" );
+continue;
+}
+if( _global[member] === null )
+{
+source.push( member + ":" + "null" );
+continue;
+}
+source.push( member + ":" + _global[member].toSource( indent, indentor ) );
+}
+}
+if( indent == null )
+{
+return( "{" + source.join( "," ) + "}" );
+}
+if( indentor == null )
+{
+indentor = "    ";
+}
+if(indent == null )
+{
+indent = 0;
+}
+var decal = "\n" + Array.initialize( indent, indentor ).join( "" );
+return( decal + "{" + decal + source.join( "," + decal ) + decal + "}" );
+}
+/* generated by Milk v1.0 */

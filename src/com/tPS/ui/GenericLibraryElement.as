@@ -1,0 +1,1 @@
+﻿import com.tPS.event.AeventSource;/** * GenericLibraryElement Class * @author	tPS * @version 1 **/class com.tPS.ui.GenericLibraryElement extends AeventSource{	private var _rt:MovieClip;	function GenericLibraryElement($rt:MovieClip){		_rt = $rt;			}		public function get _clip() : MovieClip {		return _rt;	}}

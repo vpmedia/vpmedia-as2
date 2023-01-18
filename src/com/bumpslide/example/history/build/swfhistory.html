@@ -1,0 +1,18 @@
+<html><head><title>History Controller</title>
+<script type="text/javascript" src="js/swfobject.js"></script>
+<style>
+	body { margin: 4px; background-color: #666666; font: 10px Verdana; color: #ff0; }
+</style>
+</head>
+<body>
+<div id="flashcontent">There was an error loading the SWFHistory controller SWF</div>     
+<script type="text/javascript">
+<!--
+	var so = new SWFObject("swfhistory.swf", "historyswf", "300", "22", "7", "#666666");
+	so.addVariable('connId', top.SWFHistory.connId);
+	so.addVariable('stateVars', document.location.search.slice(1));
+	so.write("flashcontent");
+//-->
+</script>
+</body>
+</html>

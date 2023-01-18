@@ -1,0 +1,34 @@
+intrinsic class swfstudio.core.Browser
+{
+	public function allowPopups(params:Object,callback:Object,errorCallback:Object):Object;
+	public function allowDragDrop(params:Object,callback:Object,errorCallback:Object):Object;
+	public function allowMenu(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getBrowsers(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setSilent(params:Object,callback:Object,errorCallback:Object):Object;
+	public function showBorder(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getSource(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getOuterHTML(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getHREF(params:Object,callback:Object,errorCallback:Object):Object;
+	public function showScrollbars(params:Object,callback:Object,errorCallback:Object):Object;
+	public function close(params:Object,callback:Object,errorCallback:Object):Object;
+	public function home(params:Object,callback:Object,errorCallback:Object):Object;
+	public function search(params:Object,callback:Object,errorCallback:Object):Object;
+	public function forward(params:Object,callback:Object,errorCallback:Object):Object;
+	public function back(params:Object,callback:Object,errorCallback:Object):Object;
+	public function addRule(params:Object,callback:Object,errorCallback:Object):Object;
+	public function refresh(params:Object,callback:Object,errorCallback:Object):Object;
+	public function stop(params:Object,callback:Object,errorCallback:Object):Object;
+	public function print(params:Object,callback:Object,errorCallback:Object):Object;
+	public function printNoPrompt(params:Object,callback:Object,errorCallback:Object):Object;
+	public function saveAs(params:Object,callback:Object,errorCallback:Object):Object;
+	public function clearRules(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setBrowser(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setURL(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setNotify(params:Object,callback:Object,errorCallback:Object):Object;
+	public function clearNotify(params:Object,callback:Object,errorCallback:Object):Object;
+	public function open(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setSize(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setPosition(params:Object,callback:Object,errorCallback:Object):Object;
+	public function clearAnchors(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setAnchors(params:Object,callback:Object,errorCallback:Object):Object;
+}

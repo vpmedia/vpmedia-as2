@@ -1,0 +1,1 @@
+﻿/** *  * @author tPS * @version 1 **/class com.tPS.event.AeventSource {		function addListener(){};	function removeListener(){};	function broadcastMessage(){};	function AeventSource(){		AsBroadcaster.initialize(this);	}	}

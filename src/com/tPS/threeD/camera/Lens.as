@@ -1,0 +1,1 @@
+﻿/** * Virtual Camera Lens Object * @author tPS * @version 1 **/class com.tPS.threeD.camera.Lens   {	//props	private var $f:Number;	static var dofBlur:Number = 20;	private var $lensFilters:Array;	function Lens(){		$f = 100;		$lensFilters = [];	}	function get _f():Number{		return $f;	}}

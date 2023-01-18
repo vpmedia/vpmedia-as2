@@ -1,0 +1,8 @@
+/** * com.sekati.load.GraphicLoader * @version 1.0.0 * @author jason m horwitz | sekati.com | tendercreative.com * Copyright (C) 2007  jason m horwitz, Sekat LLC. All Rights Reserved. * Released under the MIT License: http://www.opensource.org/licenses/mit-license.php */import com.sekati.load.Loader;import com.sekati.load.LoaderEvent;import com.sekati.utils.Delegate;
+/** * GraphicLoader */class com.sekati.load.GraphicLoader extends Loader {
+	private var _container:MovieClip;	private var _loader:MovieClipLoader;	private var _child:Object;	private var _o:Object;
+	public function GraphicLoader(container:MovieClip, url:String, reloads:Number) {		super( );		_child = Object( this );				_rawURL = url;		_url = url;		_container = container;		_reloads = reloads;				_loader = new MovieClipLoader( );				_o = new Object( );		_o.onLoadInit = Delegate.create( this, onReady );		_o.onLoadError = Delegate.create( this, onError );		_o.onLoadProgress = Delegate.create( this, onProgress );			}
+	public function load():Void {		_loader.addListener( _o );		_loader.loadClip( _url, _container );	}
+	public function unload():Void {		_loader.removeListener( _o );		_loader.unloadClip( _container );	}
+	private function onReady():Void {		_isReady = true;		onProgress( );			_child.postLoad( );		broadcastEvent( LoadableEvents.onReady, this );	}
+	private function onError():Void {		if (_reloadCount++ >= _reloads || _reloads == null) {			broadcastEvent( LoaderEvent.onError, this );		} else {			broadcastEvent( LoaderEvent.onRetry, this );			reload( );		}	}}

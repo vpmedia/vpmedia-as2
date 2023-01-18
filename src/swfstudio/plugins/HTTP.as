@@ -1,0 +1,32 @@
+intrinsic class swfstudio.plugins.HTTP
+{
+	public function inputFile(params:Object,callback:Object,errorCallback:Object):Object;
+	public function proxyUser(params:Object,callback:Object,errorCallback:Object):Object;
+	public function port(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getContentLength(params:Object,callback:Object,errorCallback:Object):Object;
+	public function authPswd(params:Object,callback:Object,errorCallback:Object):Object;
+	public function stop(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getDefaultProxyPort(params:Object,callback:Object,errorCallback:Object):Object;
+	public function request(params:Object,callback:Object,errorCallback:Object):Object;
+	public function readChunk(params:Object,callback:Object,errorCallback:Object):Object;
+	public function method(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getDefaultProxyServer(params:Object,callback:Object,errorCallback:Object):Object;
+	public function proxyServer(params:Object,callback:Object,errorCallback:Object):Object;
+	public function protocol(params:Object,callback:Object,errorCallback:Object):Object;
+	public function read(params:Object,callback:Object,errorCallback:Object):Object;
+	public function proxyPswd(params:Object,callback:Object,errorCallback:Object):Object;
+	public function proxyPort(params:Object,callback:Object,errorCallback:Object):Object;
+	public function local(params:Object,callback:Object,errorCallback:Object):Object;
+	public function userAgent(params:Object,callback:Object,errorCallback:Object):Object;
+	public function host(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getDefaultBrowser(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getBuffer(params:Object,callback:Object,errorCallback:Object):Object;
+	public function clearNotify(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getHeaders(params:Object,callback:Object,errorCallback:Object):Object;
+	public function authUser(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setNotify(params:Object,callback:Object,errorCallback:Object):Object;
+	public function resource(params:Object,callback:Object,errorCallback:Object):Object;
+	public function headers(params:Object,callback:Object,errorCallback:Object):Object;
+	public function start(params:Object,callback:Object,errorCallback:Object):Object;
+	public function bufferSize(params:Object,callback:Object,errorCallback:Object):Object;
+}

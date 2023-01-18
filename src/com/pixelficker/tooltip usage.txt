@@ -1,0 +1,107 @@
+/*
+
+simple use: (clip instance 'button' / 'v2button' should be on Stage ;-) )
+
+
+
+import com.pixelficker.gui.ToolTip;
+
+_global.toolTip = new ToolTip();
+
+button.onRollOver = function () {
+
+	toolTip.showToolTip(this)
+
+};
+
+button.onRollOut = function () {
+
+	toolTip.hideToolTip(this)
+
+};
+
+toolTip.registerClip (button, "Hallo, \rich bin nur ein kleiner unscheinbarer Knopf,\rder einen Tooltip besitzt.", "Arial", false);
+
+
+
+//for V2 Buttons u use this:
+
+import com.pixelficker.gui.ToolTip;
+
+_global.toolTip = new ToolTip ();
+
+//* This is needed to catch the mouseOver Events on v2Buttons:
+
+import mx.events.LowLevelEvents;
+
+var ll:mx.events.LowLevelEvents;
+
+//*/
+
+var bListener:Object = {clip1:save_btn, clip2:save2_btn};
+
+bListener.mouseOver = function (evtObj) {
+
+	switch (evtObj.target._name) {
+
+		case  "save_btn":
+
+			toolTip.showToolTip (this.clip1);
+
+			break;
+
+		case "save2_btn":
+
+			toolTip.showToolTip (this.clip2);
+
+			break;
+
+	}
+
+};
+
+bListener.mouseOut = function (evtObj) {
+
+	switch (evtObj.target._name) {
+
+		case  "save_btn":
+
+			toolTip.hideToolTip (this.clip1);
+
+			break;
+
+		case "save2_btn":
+
+			toolTip.hideToolTip (this.clip2);
+
+			break;
+
+	}
+
+	
+
+};
+
+toolTip.registerClip (save_btn, "Hallo, \rich bin nur ein kleiner unscheinbarer Knopf.", "Arial", true);
+
+toolTip.registerClip (save2_btn, "Hallo, \rich bin nur ein weiterer kleiner unscheinbarer Knopf.", "Courier", true);
+
+save_btn.addEventListener ("mouseOver", bListener);
+
+save_btn.addEventListener ("mouseOut", bListener);
+
+save2_btn.addEventListener ("mouseOver", bListener);
+
+save2_btn.addEventListener ("mouseOut", bListener);
+
+
+
+/*
+
+!!!!!!!!!!!!
+
+U must embed the font specified in the 'construcor'! - but u can use different fonts for every registerd clip in this class ;-)=
+
+
+
+*/

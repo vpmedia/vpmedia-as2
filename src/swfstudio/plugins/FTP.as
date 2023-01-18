@@ -1,0 +1,32 @@
+intrinsic class swfstudio.plugins.FTP
+{
+	public function getDirList(params:Object,callback:Object,errorCallback:Object):Object;
+	public function removeDir(params:Object,callback:Object,errorCallback:Object):Object;
+	public function port(params:Object,callback:Object,errorCallback:Object):Object;
+	public function passiveMode(params:Object,callback:Object,errorCallback:Object):Object;
+	public function authPswd(params:Object,callback:Object,errorCallback:Object):Object;
+	public function createDir(params:Object,callback:Object,errorCallback:Object):Object;
+	public function transfer(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getCurrentDir(params:Object,callback:Object,errorCallback:Object):Object;
+	public function connect(params:Object,callback:Object,errorCallback:Object):Object;
+	public function close(params:Object,callback:Object,errorCallback:Object):Object;
+	public function host(params:Object,callback:Object,errorCallback:Object):Object;
+	public function removeFile(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getXMLDirList(params:Object,callback:Object,errorCallback:Object):Object;
+	public function open(params:Object,callback:Object,errorCallback:Object):Object;
+	public function chmod(params:Object,callback:Object,errorCallback:Object):Object;
+	public function clearNotify(params:Object,callback:Object,errorCallback:Object):Object;
+	public function remoteFile(params:Object,callback:Object,errorCallback:Object):Object;
+	public function authUser(params:Object,callback:Object,errorCallback:Object):Object;
+	public function setNotify(params:Object,callback:Object,errorCallback:Object):Object;
+	public function transferChunk(params:Object,callback:Object,errorCallback:Object):Object;
+	public function transferMode(params:Object,callback:Object,errorCallback:Object):Object;
+	public function direction(params:Object,callback:Object,errorCallback:Object):Object;
+	public function changeDir(params:Object,callback:Object,errorCallback:Object):Object;
+	public function renameFile(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getLastResponse(params:Object,callback:Object,errorCallback:Object):Object;
+	public function getFileSize(params:Object,callback:Object,errorCallback:Object):Object;
+	public function bufferSize(params:Object,callback:Object,errorCallback:Object):Object;
+	public function localFile(params:Object,callback:Object,errorCallback:Object):Object;
+	public function disconnect(params:Object,callback:Object,errorCallback:Object):Object;
+}

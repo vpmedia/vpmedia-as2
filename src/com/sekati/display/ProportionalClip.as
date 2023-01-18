@@ -1,0 +1,5 @@
+/** * com.sekati.display.ProportionalClip * @version 1.0.1 * @author jason m horwitz | sekati.com | tendercreative.com * Copyright (C) 2007  jason m horwitz, Sekat LLC. All Rights Reserved. * Released under the MIT License: http://www.opensource.org/licenses/mit-license.php */import com.sekati.display.LiquidClip;import com.sekati.display.StageDisplay;import com.sekati.utils.AlignUtils;
+/** * ProportionalClip */class com.sekati.display.ProportionalClip extends LiquidClip {
+	private var _liquid:MovieClip;	private var _isRepositioned:Boolean;
+	public function ProportionalClip() {		super( );		_liquid = _this;		_isRepositioned = true;	}
+	/**	 * proportionally scale and position the clip contents	 * @return Void	 */	public function _onResize():Void {		AlignUtils.scaleRatio( _liquid, Stage.width, Stage.height );		if (_isRepositioned) {			AlignUtils.alignCenter( _liquid, StageDisplay.$ );		}	}	}

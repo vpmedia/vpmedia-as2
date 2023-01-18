@@ -1,0 +1,11 @@
+/** * com.sekati.geom.TrigoBase * @version 1.0.3 * @author jason m horwitz | sekati.com * Copyright (C) 2007  jason m horwitz, Sekat LLC. All Rights Reserved. * Released under the MIT License: http://www.opensource.org/licenses/mit-license.php *  * Sourced from nectere for dependencies */import com.sekati.geom.Point;import com.sekati.geom.Point3D;import com.sekati.math.MathBase;
+/** * static class wrapping various Trig utilities */class com.sekati.geom.TrigoBase {
+	/**	 * Convert angle to radian	 */	public static function angle2radian(a:Number):Number {		return TrigoBase.resolveAngle( a ) * Math.PI / 180;	}
+	/**	 * Convert radian to angle	 */	public static function radian2angle(r:Number):Number {		return TrigoBase.resolveAngle( r * 180 / Math.PI );	}
+	/**	 * will always give back a positive angle between 0 and 360	 */	public static function resolveAngle(a:Number):Number {		var mod:Number = a % 360;		return (mod < 0) ? 360 + mod : mod;	}
+	/**	 * Get angle from two points	 */	public static function getAngle(p1:Point, p2:Point):Number {		var r:Number = Math.atan2( p2.y - p1.y, p2.x - p1.x );		return TrigoBase.radian2angle( r );	}
+	/**	 * Get radian from two points	 */	public static function getRadian(p1:Point, p2:Point):Number {		return TrigoBase.angle2radian( TrigoBase.getAngle( p1, p2 ) );	}
+	/**	 * Get distance between two points	 */	public static function getDistance(p1:Point, p2:Point):Number {		var xd:Number = p1.x - p2.x;		var yd:Number = p1.y - p2.y;		return Math.sqrt( xd * xd + yd * yd );	}
+	public static function getZDistance(p1:Point3D, p2:Point3D):Number {		return  p1.z - p2.z;	}
+	/**	 * Get new point based on distance and angle from a given point	 * 	 * Note: Rounding to 3 decimals because got results like this: 6.12303176911189e-15	 * just as a precaution not to screw up movieclips positions & infinite tween loops	 */	public static function getPointFromDistanceAndAngle(centerPoint:Point, dist:Number, angle:Number):Point {		var rad:Number = TrigoBase.angle2radian( angle );		return new Point( MathBase.round( centerPoint.x + Math.cos( rad ) * dist, 3 ), MathBase.round( centerPoint.y + Math.sin( rad ) * dist, 3 ) );	}
+	private function TrigoBase() {	}}
